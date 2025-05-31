@@ -1,5 +1,5 @@
-FROM nginx:latest
-# Remplacer le latest 
+FROM nginx:1.27
+ 
 
 # Installe les dépendances nécessaires (pour Debian-based nginx image)
 RUN apt-get update && \
