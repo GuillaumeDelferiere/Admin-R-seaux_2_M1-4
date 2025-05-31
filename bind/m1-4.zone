@@ -1,0 +1,17 @@
+$ORIGIN m1-4.ephec-ti.be.
+$TTL 86400
+
+@    IN    SOA    ns    admin.m1-4.ephec-ti.be (
+                2025032001 ; serial
+                21600 ; refresh
+                3600 ; retry
+                604800 ; expire
+                86400 ; min TTL
+)
+    IN    NS    ns
+ns    IN    A    54.36.181.86
+www    IN    A    54.36.181.86
+blog   IN    CNAME    www.m1-4.ephec-ti.be.
+
+@	IN  MX 10 mail.m1-4.ephec-ti.be.
+mail    IN  A      54.36.181.86

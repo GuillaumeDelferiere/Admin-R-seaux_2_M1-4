@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  bind:
+    build: ./bind
+    container_name: bind
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - bind_cache:/var/cache/bind
+    networks:
+      - dmzet
+
+  mariadb:
+    image: mariadb:11.1
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./mariadb/root.env
+      - ./mariadb/db.env
+    volumes:
+      - ./mariadb/init:/docker-entrypoint-initdb.d
+      - ./mariadb/conf/my-resolve.cnf:/etc/mysql/conf.d/my-resolve.cnf
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - db_net
+
+  php:
+    build: ./php
+    container_name: php
+    volumes:
+      - ./nginx/www:/var/www/www
+    env_file:
+      - ./mariadb/db.env
+      - ./mariadb/root.env
+    networks:
+      - dmzet
+      - db_net
+
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/www:/var/www/www
+      - ./nginx/blog:/var/www/blog
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/certificate:/etc/nginx/certs:ro
+      - ./nginx/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - php
+    networks:
+      - dmzet
+
+volumes:
+  bind_cache:
+  mariadb_data:
+
+networks:
+  dmzet:
+    driver: bridge
+  db_net:
+    driver: bridge
+
+

@@ -1,0 +1,42 @@
+### Fichiers sensibles ###
+.env
+*.env
+**/.env*
+**/*.env*
+
+### Données Docker/Conteneurs ###
+**/docker-data/
+**/mail-state/
+**/spool-*/
+**/lib-*/
+**/*.pid
+**/*.lock
+**/*.sock
+
+### Certificats SSL/TLS ###
+**/certificate/
+**/letsencrypt/
+**/*.key
+**/*.pem
+**/*.crt
+**/*.csr
+
+### Logs et caches ###
+*.log
+**/*.log
+**/logs/
+**/tmp/
+**/*.cache
+
+### Fichiers système ###
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
+
+### Fichiers générés ###
+*.pyc
+__pycache__/
+node_modules/
